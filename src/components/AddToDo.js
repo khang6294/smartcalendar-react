@@ -10,6 +10,12 @@ const addToDo = React.memo((props) => {
     const clearInput = () => {
         setInputValue('')
     }
+    const onSubmit = () => {
+        if(inputValue !== ''){
+            props.newToDo(inputValue);
+            clearInput()
+        } else return null
+    }
     return (
         <>
             <Row type="flex" justify="start">
@@ -17,15 +23,14 @@ const addToDo = React.memo((props) => {
                     value={inputValue} 
                     style={{width:'200px'}}
                     onChange ={onInputChange}
+                    onKeyPress = {(event) => {
+                        if (event.which === 13 || event.keyCode === 13) {
+                            onSubmit()
+                        }
+                    }}
                 />
                 <Button
-                    onClick = {() => {
-                        if(inputValue !== ''){
-                            props.newToDo(inputValue);
-                            clearInput()
-                        } else return null
-                        
-                    }}
+                    onClick = {onSubmit}
                 >
                     Add
                 </Button>
