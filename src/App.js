@@ -1,17 +1,26 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Layout from './components/Layout'
+import AddToDo from './components/AddToDo'
+import ToDoList from './components/ToDoList'
 import 'antd/dist/antd.css';
-class App extends Component {
-  render() {
+const App = (props) => {
+    const [toDoList, setToDoList] = useState([])
     return (
       <div className="App">
         <Layout>
-          ABC
+          <AddToDo
+              newToDo = {(toDo) => {
+                toDoList.push(toDo)
+                setToDoList(toDoList)
+              }} 
+          />
+          <ToDoList
+              toDoList = {toDoList}
+          />
         </Layout>
       </div>
     );
-  }
 }
 
 export default App;

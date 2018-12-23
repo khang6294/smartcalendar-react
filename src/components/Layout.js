@@ -8,7 +8,7 @@ const layout = React.memo((props) => {
     return (
         <Layout className="layout">
             <Header style={{background:'#0b66bd'}}>
-                <div className="logo">
+                <div style={{fontSize:'1.5em',color:'white',fontWeight:'bold'}}>
                     TODOAPP
                 </div>
             </Header>
