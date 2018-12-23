@@ -5,18 +5,17 @@ import AddToDo from './components/AddToDo'
 import ToDoList from './components/ToDoList'
 import 'antd/dist/antd.css';
 const App = (props) => {
-    const [toDoList, setToDoList] = useState([])
+    const [newToDo, setnewToDo] = useState('')
     return (
       <div className="App">
         <Layout>
           <AddToDo
               newToDo = {(toDo) => {
-                toDoList.push(toDo)
-                setToDoList(toDoList)
+                setnewToDo(toDo)
               }} 
           />
           <ToDoList
-              toDoList = {toDoList}
+              newToDo = {newToDo}
           />
         </Layout>
       </div>
