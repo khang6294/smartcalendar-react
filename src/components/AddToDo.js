@@ -20,8 +20,11 @@ const addToDo = React.memo((props) => {
                 />
                 <Button
                     onClick = {() => {
-                        props.newToDo(inputValue);
-                        clearInput()
+                        if(inputValue !== ''){
+                            props.newToDo(inputValue);
+                            clearInput()
+                        } else return null
+                        
                     }}
                 >
                     Add
