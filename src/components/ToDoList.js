@@ -26,6 +26,9 @@ const toDoList = (props) => {
             style= {{width: '50%', marginTop:'1rem'}}
             bordered
             dataSource={toDoList}
+            locale = {{
+                emptyText:'You have nothing to do!'
+            }}
             renderItem= {item => (
                 <List.Item 
                     actions={[
