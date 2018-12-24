@@ -5,21 +5,23 @@ import AddToDo from './components/AddToDo'
 import ToDoList from './components/ToDoList'
 import CalendarSchedule from './components/Calendar'
 import 'antd/dist/antd.css';
+import {useTodos} from './custom-hooks'
+
+
 const App = (props) => {
-    const [newToDo, setnewToDo] = useState('')
+    const { toDoList, addToDo, removeToDo, selectDate } = useTodos();
     return (
       <div className="App">
         <Layout>
           <CalendarSchedule
-            dateSelected = {(date) => console.log(date)}
+            dateSelected = {(date) => selectDate(date)}
           />
           <AddToDo
-              newToDo = {(toDo) => {
-                setnewToDo(toDo)
-              }} 
+              newToDo = {(newToDo) => addToDo(newToDo)} 
           />
           <ToDoList
-              newToDo = {newToDo}
+              toDoList = {toDoList}
+              deleteItem = {item => removeToDo(item)}
           />
         </Layout>
       </div>
