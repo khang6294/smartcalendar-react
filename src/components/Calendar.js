@@ -20,6 +20,10 @@ const calendarSchedule = React.memo((props) => {
             <Alert 
                 message={`You selected date: ${selectedValue && selectedValue.format('YYYY-MM-DD')}`} 
             />
+            <br/>
+            <Alert 
+                message={`You have ${props.toDoList.length <= 1 ? `${props.toDoList.length} stuff`: `${props.toDoList.length} stuffs`}  to do`} 
+            />
             <Calendar 
                 fullscreen={false} 
                 value={value} 

@@ -14,10 +14,12 @@ const App = (props) => {
       <div className="App">
         <Layout>
           <CalendarSchedule
-            dateSelected = {(date) => selectDate(date)}
+              dateSelected = {(date) => selectDate(date)}
+              toDoList = {toDoList}
           />
           <AddToDo
               newToDo = {(newToDo) => addToDo(newToDo)} 
+              toDoList = {toDoList}
           />
           <ToDoList
               toDoList = {toDoList}
