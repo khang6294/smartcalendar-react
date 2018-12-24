@@ -12,7 +12,10 @@ export const useTodos = (initialValue = {date:moment(Date.now()).format('YYYY-MM
         let toDoAndDateClone = [...toDoAndDate]
         for(let i = 0; i < toDoAndDateClone.length; i++){
             if(dateSelected === toDoAndDateClone[i].date){
-                toDoAndDateClone[i].toDoList.push(newToDo)
+                toDoAndDateClone[i].toDoList.push({
+                    toDo: newToDo,
+                    completed: false
+                })
                 setToDoAndDate(toDoAndDateClone)
                 setToDoList(toDoAndDateClone[i].toDoList)
             }
@@ -45,7 +48,7 @@ export const useTodos = (initialValue = {date:moment(Date.now()).format('YYYY-MM
             if(dateSelected === toDoAndDateClone[j].date){
                 let toDoListClone = [...toDoAndDateClone[j].toDoList]
                 for(let i = 0 ; i< toDoListClone.length; i++){
-                    if(toDo === toDoListClone[i]){
+                    if(toDo === toDoListClone[i].toDo){
                         toDoListClone.splice(i,1)
                     }
                 }
@@ -56,12 +59,32 @@ export const useTodos = (initialValue = {date:moment(Date.now()).format('YYYY-MM
         }
         setToDoAndDate(toDoAndDateClone) 
     }
+
+    const completeToDo = (item) => {
+        let toDoAndDateClone = [...toDoAndDate]
+        for(let j = 0; j < toDoAndDateClone.length; j++){
+            if(dateSelected === toDoAndDateClone[j].date){
+                let toDoListClone = [...toDoAndDateClone[j].toDoList]
+                for(let i = 0 ; i< toDoListClone.length; i++){
+                    if(item.toDo === toDoListClone[i].toDo){
+                        toDoListClone[i] = {...item}
+                    }
+                }
+                toDoAndDateClone[j].toDoList = [...toDoListClone]
+                setToDoList(toDoListClone)
+                
+            }
+        }
+        setToDoAndDate(toDoAndDateClone) 
+
+    }
   
     return {
         toDoList: toDoList,
         addToDo: addToDo,
         removeToDo: removeToDo,
-        selectDate: selectDate
+        selectDate: selectDate,
+        completeToDo: completeToDo
     }
 };
 

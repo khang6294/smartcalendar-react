@@ -5,9 +5,9 @@ import {List,Icon,Checkbox} from 'antd'
 
 const toDoList = (props) => {
     const onComplete = (e,item) =>{
-        console.log(`checked = ${e.target.checked}`);
-        console.log({
-            item: item,
+        // console.log(`checked = ${e.target.checked}`);
+        props.completeItem({
+            toDo: item.toDo,
             completed: e.target.checked
         })
     }
@@ -22,12 +22,13 @@ const toDoList = (props) => {
             renderItem= {item => (
                 <List.Item 
                     actions={[
-                        <Icon type="delete" onClick={() => props.deleteItem(item)}/>
+                        <Icon type="delete" onClick={() => props.deleteItem(item.toDo)}/>
                     ]}>
                     <List.Item.Meta
-                        title={item}
+                        title={item.toDo}
                         description={
                             <Checkbox 
+                                checked = {item.completed}
                                 onChange={(event) => onComplete(event,item)}
                             >
                                 Complete

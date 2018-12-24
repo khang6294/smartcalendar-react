@@ -14,6 +14,8 @@ const calendarSchedule = React.memo((props) => {
     const onPanelChange = (value) => {
         setValue(value)
     }
+
+    const incompletedStuffs = props.toDoList.filter(toDo => toDo.completed === false)
     
     return(
         <div>
@@ -22,7 +24,7 @@ const calendarSchedule = React.memo((props) => {
             />
             <br/>
             <Alert 
-                message={`You have ${props.toDoList.length <= 1 ? `${props.toDoList.length} stuff`: `${props.toDoList.length} stuffs`}  to do`} 
+                message={`You have ${incompletedStuffs.length <= 1 ? `${incompletedStuffs.length} stuff`: `${incompletedStuffs.length} stuffs`}  to do`} 
             />
             <Calendar 
                 fullscreen={false} 
