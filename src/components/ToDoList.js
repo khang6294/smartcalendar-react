@@ -5,7 +5,6 @@ import {List,Icon,Checkbox} from 'antd'
 
 const toDoList = (props) => {
     const onComplete = (e,item) =>{
-        // console.log(`checked = ${e.target.checked}`);
         props.completeItem({
             toDo: item.toDo,
             completed: e.target.checked
@@ -20,7 +19,22 @@ const toDoList = (props) => {
                 emptyText:'You have nothing to do!'
             }}
             renderItem= {item => (
+                <div>
+                    {/* {item.completed ? 
+                    <Icon 
+                        type="check-circle" 
+                        style={{
+                            position: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            height:'100%',
+                            zIndex: 100
+                        }}/> : 
+                    null 
+                    } */}
+
                 <List.Item 
+                    style ={ item.completed ? {opacity: 0.3} : {}}
                     actions={[
                         <Icon type="delete" onClick={() => props.deleteItem(item.toDo)}/>
                     ]}>
@@ -36,6 +50,7 @@ const toDoList = (props) => {
                         }
                     />
                 </List.Item> 
+                </div>
             )}
         />
     )

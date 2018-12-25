@@ -1,11 +1,10 @@
 import React,{useState} from 'react';
 import {Input,Button,Row,message} from 'antd';
-import toDoList from './ToDoList';
 
 
 const addToDo = React.memo((props) => {
     const [inputValue,setInputValue] = useState('');
-    
+
     const onInputChange = (event) => {
         setInputValue(event.target.value)
     }

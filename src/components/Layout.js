@@ -9,7 +9,7 @@ const layout = React.memo((props) => {
         <Layout className="layout">
             <HeaderApp/>
             <Content>
-                <div style={{ background: '#fff', padding: 24 }}>
+                <div style={{ background: '#fff', padding: 50 }}>
                     {props.children}
                 </div>
             </Content>
