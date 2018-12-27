@@ -4,10 +4,12 @@
   "private": true,
   "dependencies": {
     "antd": "^3.11.2",
+    "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "express-graphql": "^0.7.1",
     "graphql": "^14.0.2",
     "moment": "^2.23.0",
+    "mongoose": "^5.4.0",
     "react": "16.7.0-alpha.0",
     "react-dom": "16.7.0-alpha.0",
     "react-scripts": "^2.1.1"
