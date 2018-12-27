@@ -4,6 +4,7 @@ const { buildSchema } = require('graphql')
 module.exports = buildSchema(`
     type Work {
         _id: ID!
+        dateWork: String!
         toDo: [String!]!
         creator: User!
     }
@@ -21,8 +22,14 @@ module.exports = buildSchema(`
         password: String!
     }
 
+    input WorkInputData {
+        dateWork: String!
+        toDo: [String!]
+    }
+
     type RootMutation {
         createUser(userInput: UserInputData): User!
+        createWork(workInput: WorkInputData): Work!
     }
 
     type RootQuery {

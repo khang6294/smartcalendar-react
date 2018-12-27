@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
 const workSchema = new Schema({
-    date: {
+    dateWork: {
         type: String,
         required: true
     },
