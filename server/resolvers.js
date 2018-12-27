@@ -25,6 +25,20 @@ module.exports = {
             _id: createdWork._id.toString(),
           };
     },
+    works: async function({creator},req){
+        if(!creator){
+            creator = "5c24ac21d56564235cfe8ab4"
+        }
+        const works = await Work.find()
+        console.log(works)
+        return works.filter(work => work.creator.toString() === creator).map(work => {
+                return {
+                    ...work._doc,
+                    _id: work._id.toString(),
+                };
+            })
+
+    },
     hello: () => {
         return "Hello"
     }
