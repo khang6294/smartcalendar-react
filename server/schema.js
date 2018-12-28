@@ -34,6 +34,7 @@ module.exports = buildSchema(`
 
     type RootQuery {
         works(creator: String!): [Work!]
+        work(dateWork: String!): Work!
     }
 
     schema {

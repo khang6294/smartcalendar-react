@@ -39,6 +39,13 @@ module.exports = {
             })
 
     },
+    work: async function({dateWork},req){
+        const work = await Work.findOne({dateWork:dateWork})
+        return {
+            ...work._doc,
+            _id:work._id.toString()
+        }
+    },
     hello: () => {
         return "Hello"
     }
