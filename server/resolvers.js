@@ -16,7 +16,7 @@ module.exports = {
     createWork: async function({workInput},req) {
         const work = new Work({
             dateWork: workInput.dateWork,
-            toDo: workInput.toDo,
+            toDoList: workInput.toDoList,
             creator: "5c24ac21d56564235cfe8ab4"
           });
           const createdWork = await work.save();

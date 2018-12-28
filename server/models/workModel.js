@@ -7,8 +7,9 @@ const workSchema = new Schema({
         type: String,
         required: true
     },
-    toDo: {
-        type: Array
+    toDoList: {
+        type: Array,
+        required:true
     },
     creator: {
         type: Schema.Types.ObjectId,

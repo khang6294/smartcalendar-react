@@ -5,8 +5,13 @@ module.exports = buildSchema(`
     type Work {
         _id: ID!
         dateWork: String!
-        toDo: [String!]!
+        toDoList: [ToDoElement!]!
         creator: User!
+    }
+
+    type ToDoElement {
+        toDo: String!
+        completed: Boolean
     }
     type User {
         _id: ID!
@@ -14,6 +19,11 @@ module.exports = buildSchema(`
         email: String!
         password: String
         works: [Work!]!
+    }
+
+    input ToDoObj {
+        toDo: String!
+        completed: Boolean
     }
 
     input UserInputData {
@@ -24,7 +34,7 @@ module.exports = buildSchema(`
 
     input WorkInputData {
         dateWork: String!
-        toDo: [String!]
+        toDoList: [ToDoObj!]
     }
 
     type RootMutation {
