@@ -9,11 +9,12 @@ import {useTodos} from './custom-hooks'
 
 
 const App = (props) => {
-    const { toDoList, addToDo, removeToDo, selectDate ,completeToDo} = useTodos();
+    const { toDoAndDate,toDoList, addToDo, removeToDo, selectDate ,completeToDo} = useTodos();
     return (
       <div className="App">
         <Layout>
           <CalendarSchedule
+              toDoAndDate = {toDoAndDate}
               dateSelected = {(date) => selectDate(date)}
               toDoList = {toDoList}
           />
