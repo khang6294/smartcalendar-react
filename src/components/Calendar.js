@@ -6,7 +6,7 @@ const calendarSchedule = React.memo((props) => {
     //console.log(props.toDoAndDate)
     function getListData(value) {
         const availDate = props.toDoAndDate.map(ele => ele.dateWork)
-        console.log(availDate)
+        //console.log(availDate)
         const valueFormat = moment(value).format('YYYY-MM-DD')
         let listData = [];
         if(availDate.indexOf(valueFormat) > -1){

@@ -9,6 +9,8 @@ export const useTodos = (initialValue = {dateWork:"",toDoList: []}) => {
         toDoList: toDoList
     }])
     const [fetch,setFetch] = useState(false)
+    const [edit, setEdit] = useState(false)
+    const [dateOri, setDateOri] = useState([])
 
     
 
@@ -30,7 +32,10 @@ export const useTodos = (initialValue = {dateWork:"",toDoList: []}) => {
             .then(res => {
                 setToDoAndDate(res.data.data.works)
                 setFetch(true)
+                const dateOri = res.data.data.works.map(work => work.dateWork)
+                setDateOri(dateOri)
             })
+            .catch(err => console.log(err))
     },[fetch])
 
     const addToDo = (newToDo) => {
@@ -43,6 +48,7 @@ export const useTodos = (initialValue = {dateWork:"",toDoList: []}) => {
                 })
                 setToDoAndDate(toDoAndDateClone)
                 setToDoList(toDoAndDateClone[i].toDoList)
+                setEdit(true)
             }
         }
         
@@ -96,6 +102,7 @@ export const useTodos = (initialValue = {dateWork:"",toDoList: []}) => {
             }
         }
         setToDoAndDate(toDoAndDateClone) 
+        setEdit(true)
     }
 
     const completeToDo = (item) => {
@@ -114,6 +121,52 @@ export const useTodos = (initialValue = {dateWork:"",toDoList: []}) => {
             }
         }
         setToDoAndDate(toDoAndDateClone) 
+        setEdit(true)
+    }
+
+    const onSave = () => {
+        const toDoListJSON = JSON.stringify(toDoList);
+        const graphQlToDoList = toDoListJSON.replace(/"([^(")"]+)":/g,"$1:");
+        let updateWork;
+        if(dateOri.indexOf(dateWorkSelected) > -1){
+            updateWork = {
+                query:`
+                mutation {
+                    updateWork(dateWork:"${dateWorkSelected}", workInput:{
+                          dateWork:"${dateWorkSelected}",
+                          toDoList: ${graphQlToDoList}
+                        }){
+                      dateWork
+                      toDoList{
+                        toDo
+                        completed
+                      }
+                    }
+                  }
+                `
+            }
+        } else {
+            updateWork = {
+                query:`
+                mutation {
+                    createWork(workInput:{
+                          dateWork:"${dateWorkSelected}",
+                          toDoList:${graphQlToDoList} 
+                        }){
+                        dateWork
+                        toDoList{
+                            toDo
+                            completed
+                      }
+                    }
+                  }
+                `
+            }
+        }
+        
+        axios.post('http://localhost:8080/graphql',updateWork)
+            .then(res => console.log("Work"))
+            .catch(err => console.log(err))
 
     }
   
@@ -123,7 +176,9 @@ export const useTodos = (initialValue = {dateWork:"",toDoList: []}) => {
         addToDo: addToDo,
         removeToDo: removeToDo,
         selectDate: selectDate,
-        completeToDo: completeToDo
+        completeToDo: completeToDo,
+        onSave: onSave,
+        edit: edit
     }
 };
 

@@ -40,6 +40,7 @@ module.exports = buildSchema(`
     type RootMutation {
         createUser(userInput: UserInputData): User!
         createWork(workInput: WorkInputData): Work!
+        updateWork(dateWork: String!, workInput: WorkInputData): Work!
     }
 
     type RootQuery {

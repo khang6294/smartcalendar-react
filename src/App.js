@@ -9,7 +9,7 @@ import {useTodos} from './custom-hooks'
 
 
 const App = (props) => {
-    const { toDoAndDate,toDoList, addToDo, removeToDo, selectDate ,completeToDo} = useTodos();
+    const { toDoAndDate,toDoList, edit, addToDo, removeToDo, selectDate ,completeToDo,onSave} = useTodos();
     return (
       <div className="App">
         <Layout>
@@ -21,6 +21,8 @@ const App = (props) => {
           <AddToDo
               newToDo = {(newToDo) => addToDo(newToDo)} 
               toDoList = {toDoList}
+              onSave = {onSave}
+              edit = {edit}
           />
           <ToDoList
               toDoList = {toDoList}

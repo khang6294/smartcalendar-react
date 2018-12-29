@@ -25,6 +25,10 @@ const addToDo = React.memo((props) => {
         } else return null
     }
 
+    const onSave = () => {
+        props.onSave()
+    }
+
     return (
         <>
             <Row type="flex" justify="start">
@@ -43,6 +47,13 @@ const addToDo = React.memo((props) => {
                 >
                     Add
                 </Button>
+                <Button 
+                    onClick = {onSave}
+                    disabled = {!props.edit}
+                >
+                    Save
+                </Button>
+
             </Row>
         </>
     )

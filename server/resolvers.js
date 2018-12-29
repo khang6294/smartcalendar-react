@@ -46,7 +46,14 @@ module.exports = {
             _id:work._id.toString()
         }
     },
-    hello: () => {
-        return "Hello"
-    }
+    updateWork: async function({ dateWork, workInput }, req) {
+        const work = await Work.findOne({dateWork:dateWork}) 
+        work.dateWork = dateWork       
+        work.toDoList = workInput.toDoList;
+        const updatedWork = await work.save();
+        return {
+          ...updatedWork._doc,
+          _id: updatedWork._id.toString(),
+        };
+    },
 }
