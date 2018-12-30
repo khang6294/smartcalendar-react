@@ -27,6 +27,7 @@ const addToDo = React.memo((props) => {
 
     const onSave = () => {
         props.onSave()
+        message.success("SAVED!",1)
     }
 
     return (
@@ -54,6 +55,10 @@ const addToDo = React.memo((props) => {
                     Save
                 </Button>
 
+            </Row>
+            <br/>
+            <Row type="flex" justify="start">
+                {props.edit ? <p style={{color:'red'}}>Please click SAVE button for new changes</p>: null}
             </Row>
         </>
     )

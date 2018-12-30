@@ -1,12 +1,13 @@
 import {useState, useEffect} from 'react'
 import moment from 'moment'
 import axios from 'axios'
-export const useTodos = (initialValue = {dateWork:"",toDoList: []}) => {
+export const useTodos = (initialValue = {dateWork:moment(Date.now()).format('YYYY-MM-DD'),toDoList: []}) => {
     const [toDoList, setToDoList] = useState(initialValue.toDoList);
     const [dateWorkSelected, setDateWorkSelected] = useState(initialValue.dateWork)
     const [toDoAndDate, setToDoAndDate] = useState([{
         dateWork: dateWorkSelected,
-        toDoList: toDoList
+        toDoList: toDoList,
+        editted:false
     }])
     const [fetch,setFetch] = useState(false)
     const [edit, setEdit] = useState(false)
@@ -30,8 +31,15 @@ export const useTodos = (initialValue = {dateWork:"",toDoList: []}) => {
         } 
         axios.post('http://localhost:8080/graphql',fetchAllWorks)
             .then(res => {
-                setToDoAndDate(res.data.data.works)
+                const toDoAndDateFormat = res.data.data.works.map(work => {
+                    return {
+                        ...work,
+                        editted: false
+                    }
+                })
+                setToDoAndDate(toDoAndDateFormat)
                 setFetch(true)
+                setToDoList(toDoAndDateFormat.filter(ele => ele.dateWork === dateWorkSelected)[0].toDoList)
                 const dateOri = res.data.data.works.map(work => work.dateWork)
                 setDateOri(dateOri)
             })
@@ -48,26 +56,14 @@ export const useTodos = (initialValue = {dateWork:"",toDoList: []}) => {
                 })
                 setToDoAndDate(toDoAndDateClone)
                 setToDoList(toDoAndDateClone[i].toDoList)
-                setEdit(true)
+                toDoAndDateClone[i].editted = true
+                setEdit(toDoAndDateClone[i].editted)
             }
         }
         
     }
 
     const selectDate = (date) => {
-        // const queryDateWork = {
-        //     query:`
-        //         {
-        //             work(dateWork:"${date}"){
-        //                 toDo
-        //             }
-        //         }
-        //     `
-        // }
-        // axios.post("http://localhost:8080/graphql",queryDateWork)
-        //     .then(res => {
-        //         console.log(res.data.data.work)
-        //     })
         setDateWorkSelected(date)
         let toDoAndDateClone = [...toDoAndDate]
         let dateAvail = toDoAndDate.map(ele => ele.dateWork)
@@ -82,6 +78,7 @@ export const useTodos = (initialValue = {dateWork:"",toDoList: []}) => {
         for(let i = 0; i< toDoAndDate.length; i++){
             if(date === toDoAndDate[i].dateWork){
                 setToDoList(toDoAndDate[i].toDoList)
+                setEdit(toDoAndDate[i].editted)
             }
         }
     }
@@ -98,11 +95,11 @@ export const useTodos = (initialValue = {dateWork:"",toDoList: []}) => {
                 }
                 toDoAndDateClone[j].toDoList = [...toDoListClone]
                 setToDoList(toDoListClone)
-                
+                toDoAndDateClone[j].editted = true
+                setEdit(toDoAndDateClone[j].editted)
             }
         }
         setToDoAndDate(toDoAndDateClone) 
-        setEdit(true)
     }
 
     const completeToDo = (item) => {
@@ -116,12 +113,12 @@ export const useTodos = (initialValue = {dateWork:"",toDoList: []}) => {
                     }
                 }
                 toDoAndDateClone[j].toDoList = [...toDoListClone]
+                toDoAndDateClone[j].editted = true
                 setToDoList(toDoListClone)
-                
+                setEdit(toDoAndDateClone[j].editted)
             }
         }
         setToDoAndDate(toDoAndDateClone) 
-        setEdit(true)
     }
 
     const onSave = () => {
@@ -165,7 +162,10 @@ export const useTodos = (initialValue = {dateWork:"",toDoList: []}) => {
         }
         
         axios.post('http://localhost:8080/graphql',updateWork)
-            .then(res => console.log("Work"))
+            .then(res => {
+                toDoAndDate.filter(ele => ele.dateWork === dateWorkSelected)[0].editted = false
+                setEdit(toDoAndDate.filter(ele => ele.dateWork === dateWorkSelected)[0].editted)
+            })
             .catch(err => console.log(err))
 
     }
