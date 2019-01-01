@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react'
 import moment from 'moment'
 import axios from 'axios'
+import {message} from 'antd'
 export const useTodos = (initialValue = {dateWork:moment(Date.now()).format('YYYY-MM-DD'),toDoList: []}) => {
     const [toDoList, setToDoList] = useState(initialValue.toDoList);
     const [dateWorkSelected, setDateWorkSelected] = useState(initialValue.dateWork)
@@ -9,42 +10,67 @@ export const useTodos = (initialValue = {dateWork:moment(Date.now()).format('YYY
         toDoList: toDoList,
         editted:false
     }])
-    const [fetch,setFetch] = useState(false)
     const [edit, setEdit] = useState(false)
     const [dateOri, setDateOri] = useState([])
-
-    
+    const [userInfo, setUserInfo] = useState({})
+    const [isAuth, setIsAuth] = useState(false)
+    const [userCreation, setUserCreation] = useState(false)
 
     useEffect(() => {
-        const fetchAllWorks = {
-            query:`
-                {
-                    works(creator:"5c24ac21d56564235cfe8ab4"){
-                        dateWork
-                        toDoList{
-                            toDo
-                            completed
+        const token = localStorage.getItem('token');
+        const expiryDate = localStorage.getItem('expiryDate');
+        if (!token || !expiryDate) {
+            return;
+        }
+        if (new Date(expiryDate) <= new Date()) {
+            logout();
+            return;
+        }
+        const userId = localStorage.getItem('userId');
+        const remainingMilliseconds = new Date(expiryDate).getTime() - new Date().getTime();
+        setIsAuth(true)
+        setUserInfo({
+            token:token,
+            userId: userId
+        })
+        autoLogout(remainingMilliseconds);
+    },[isAuth])
+
+    useEffect(() => {
+        if(isAuth){
+            const fetchAllWorks = {
+                query:`
+                    {
+                        works(creator:"${userInfo.userId}"){
+                            dateWork
+                            toDoList{
+                                toDo
+                                completed
+                            }
                         }
                     }
+                `
+            } 
+            axios.post('http://localhost:8080/graphql',fetchAllWorks,{
+                headers: {
+                  Authorization: 'Bearer ' + userInfo.token
                 }
-            `
-        } 
-        axios.post('http://localhost:8080/graphql',fetchAllWorks)
-            .then(res => {
-                const toDoAndDateFormat = res.data.data.works.map(work => {
-                    return {
-                        ...work,
-                        editted: false
-                    }
+              })
+                .then(res => {
+                    const toDoAndDateFormat = res.data.data.works.map(work => {
+                        return {
+                            ...work,
+                            editted: false
+                        }
+                    })
+                    setToDoAndDate(toDoAndDateFormat)
+                    setToDoList(toDoAndDateFormat.filter(ele => ele.dateWork === dateWorkSelected)[0].toDoList)
+                    const dateOri = res.data.data.works.map(work => work.dateWork)
+                    setDateOri(dateOri)
                 })
-                setToDoAndDate(toDoAndDateFormat)
-                setFetch(true)
-                setToDoList(toDoAndDateFormat.filter(ele => ele.dateWork === dateWorkSelected)[0].toDoList)
-                const dateOri = res.data.data.works.map(work => work.dateWork)
-                setDateOri(dateOri)
-            })
-            .catch(err => console.log(err))
-    },[fetch])
+                .catch(err => console.log(err))
+        }
+    },[isAuth])
 
     const addToDo = (newToDo) => {
         let toDoAndDateClone = [...toDoAndDate]
@@ -161,16 +187,89 @@ export const useTodos = (initialValue = {dateWork:moment(Date.now()).format('YYY
             }
         }
         
-        axios.post('http://localhost:8080/graphql',updateWork)
+        axios.post('http://localhost:8080/graphql',updateWork,{
+            headers: {
+              Authorization: 'Bearer ' + userInfo.token
+            }
+          })
             .then(res => {
                 toDoAndDate.filter(ele => ele.dateWork === dateWorkSelected)[0].editted = false
                 setEdit(toDoAndDate.filter(ele => ele.dateWork === dateWorkSelected)[0].editted)
             })
-            .catch(err => console.log(err))
+            .catch(err => console.log(err.response.data))
 
+    }
+
+    const login = (loginInfo) => {
+        const loginQuery = {
+            query:`
+                {
+                    login(email:"${loginInfo.email}",password:"${loginInfo.password}"){
+                        token
+                        userId
+                    }
+                  }
+            `
+        }
+        axios.post('http://localhost:8080/graphql',loginQuery)
+            .then(res => {
+                setUserInfo(res.data.data.login)
+                setIsAuth(true)
+                localStorage.setItem('token', res.data.data.login.token);
+                localStorage.setItem('userId', res.data.data.login.userId);
+                const remainingMilliseconds = 60 * 60 * 1000;
+                const expiryDate = new Date(
+                    new Date().getTime() + remainingMilliseconds
+                );
+                localStorage.setItem('expiryDate', expiryDate.toISOString());
+                autoLogout(remainingMilliseconds)
+            })
+            .catch(err => {
+                message.error(err.response.data.errors[0].message);
+            });
+    }
+
+    const logout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('expiryDate');
+        localStorage.removeItem('userId');
+        setUserInfo({})
+        setIsAuth(false)
+    }
+
+    const autoLogout = milliseconds => {
+        setTimeout(() => {
+            logout();
+        }, milliseconds);
+    };
+
+    const signup = (userInfo) => {
+        const signupQuery = {
+            query: `
+            mutation{
+                createUser(userInput:{email:"${userInfo.email}",name:"${userInfo.name}",password:"${userInfo.password}"}){
+                  email
+                  _id
+                }
+              }
+              
+            `
+        }
+        axios.post('http://localhost:8080/graphql',signupQuery)
+            .then(res => {
+                setUserCreation(true)
+                message.success("Create user successfully");
+            })
+            .catch(err => message.error(err.response.data.errors[0].message))
     }
   
     return {
+        userInfo: userInfo,
+        userCreation: userCreation,
+        isAuth:isAuth,
+        login: login,
+        logout:logout,
+        signup: signup,
         toDoAndDate: toDoAndDate,
         toDoList: toDoList,
         addToDo: addToDo,

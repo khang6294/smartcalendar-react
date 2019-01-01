@@ -21,6 +21,11 @@ module.exports = buildSchema(`
         works: [Work!]!
     }
 
+    type AuthData {
+        token: String!
+        userId: String!
+    }
+
     input ToDoObj {
         toDo: String!
         completed: Boolean
@@ -44,6 +49,7 @@ module.exports = buildSchema(`
     }
 
     type RootQuery {
+        login(email: String!, password: String!): AuthData!
         works(creator: String!): [Work!]
         work(dateWork: String!): Work!
     }

@@ -1,9 +1,17 @@
 const bcrypt = require('bcryptjs');
 const User = require('./models/userModel') 
 const Work = require('./models/workModel')
+const jwt = require('jsonwebtoken');
+
 
 module.exports = {
     createUser: async function({userInput},req) {
+        const existingUser = await User.findOne({ email: userInput.email });
+        if (existingUser) {
+            const error = new Error('User exists!');
+            error.code = 409;
+            throw error;
+        }
         const hashedPw = await bcrypt.hash(userInput.password,12)
         const user = new User({
             name: userInput.name,
@@ -13,11 +21,34 @@ module.exports = {
         const createdUser = await user.save();
         return { ...createdUser._doc, _id: createdUser._id.toString() };
     },
+    login: async function({ email, password },req) {
+        const user = await User.findOne({ email: email });
+        if (!user) {
+            const error = new Error('User not found.');
+            error.code = 401;
+            throw error;
+        }
+        const isEqual = await bcrypt.compare(password, user.password);
+        if (!isEqual) {
+            const error = new Error('Password is incorrect.');
+            error.code = 401;
+            throw error;
+        }
+        const token = jwt.sign(
+        {
+            userId: user._id.toString(),
+            email: user.email
+        },
+            'smartcalendarsuperdupersecrettokenbykennguyen',
+            { expiresIn: '1h' }
+        );
+        return { token: token, userId: user._id.toString() };
+    },
     createWork: async function({workInput},req) {
         const work = new Work({
             dateWork: workInput.dateWork,
             toDoList: workInput.toDoList,
-            creator: "5c24ac21d56564235cfe8ab4"
+            creator: req.userId.toString()
           });
           const createdWork = await work.save();
           return {
@@ -27,10 +58,9 @@ module.exports = {
     },
     works: async function({creator},req){
         if(!creator){
-            creator = "5c24ac21d56564235cfe8ab4"
+            creator = req.userId.toString()
         }
         const works = await Work.find()
-        console.log(works)
         return works.filter(work => work.creator.toString() === creator).map(work => {
                 return {
                     ...work._doc,

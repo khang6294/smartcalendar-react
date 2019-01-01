@@ -1,0 +1,173 @@
+* {
+    box-sizing: border-box;
+}
+
+.auth-background {
+    background: linear-gradient(-180deg, rgb(11, 102, 189) 40%, rgba(228, 225, 225, 0.877) 0%);
+    height:100%;
+    width: 100%;
+    position: fixed;
+}
+
+.logo {
+    margin: 0;
+    position: absolute;
+    display: block;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: "Fjalla One", sans-serif;
+    font-size: 2.5rem;
+    line-height: 40px;
+    color:white;
+    text-align: center
+}
+
+.login-form {
+    margin: 0;
+    padding: 40px;
+    position: absolute;
+    display: block;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    width: 480px;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.4);
+    -webkit-box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
+    color: black;
+    font-size: 18px;
+    vertical-align: baseline;
+}
+
+.welcome {
+    margin-bottom: 22px;
+    font-size: 40px;
+    font-weight: 400;
+    color: black;
+    text-align: center;
+}
+
+.login-field {
+    width: 100%;
+    padding: 0;
+}
+
+.login-field-name {
+    margin-bottom: 8px;
+    padding: 0;
+    line-height: 16px;
+    color:black;
+}
+
+.login-input {
+    height: 40px;
+    font-size: 16px;
+}
+
+.login-btn {
+    margin: 0;
+}
+
+.login-form-button {
+    width: 100%;
+    height: 40px;
+    font-size: 16px;
+    margin-top: 16px;
+    margin-bottom: 8px;
+    background-color: rgb(11, 102, 189);
+    border: none;
+}
+
+.login-form-button:hover {
+    background-color: #677bc4;
+}
+
+.login-form-button:focus {
+    background-color: #677bc4;
+}
+
+.register {
+    font-size: 14px;
+    line-height: 18px;
+}
+
+.login-link {
+    color: #7289da;
+}
+
+.login-link:hover {
+    cursor: pointer;
+}
+
+.login-link:hover {
+    color: #677bc4;
+}
+
+.login-logo h1 {
+    text-align: center;
+    color: rgb(7, 6, 6);
+}
+
+.register-form {
+    margin: 0;
+    margin-top: 44px;
+    padding: 40px;
+    position: absolute;
+    display: block;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    width: 480px;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.4);
+    -webkit-box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
+    color: black;
+    font-size: 18px;
+    vertical-align: baseline;
+}
+
+@media (max-width: 480px) {
+    .auth-background {
+        background: linear-gradient(-180deg, rgb(11, 102, 189) 20%, rgba(228, 225, 225, 0.877) 0%);
+        height:100%;
+        width: 100%;
+        position: fixed;
+    }
+
+    .register-form {
+        top: 50%;
+        width: 100%;
+        height: auto;
+        background-color: transparent;
+        box-shadow: none;
+        -webkit-box-shadow: none;
+    }
+
+    .login-form {
+        top: 50%;
+        width: 100%;
+        height: auto;
+        background-color: transparent;
+        box-shadow: none;
+        -webkit-box-shadow: none;
+    }
+
+    .logo {
+        margin: 0;
+        position: absolute;
+        display: block;
+        top: 10%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-family: "Fjalla One", sans-serif;
+        font-size: 2.5rem;
+        line-height: 40px;
+        color:white;
+        text-align: center
+    }
+}

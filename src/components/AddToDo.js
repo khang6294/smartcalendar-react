@@ -14,8 +14,9 @@ const addToDo = React.memo((props) => {
     }
 
     const onSubmit = () => {
+        const toDos = props.toDoList.map(ele => ele.toDo)
         if(inputValue !== ''){
-            if(props.toDoList.indexOf(inputValue) >= 0){
+            if(toDos.indexOf(inputValue) >= 0){
                 message.error('You already have this stuff to do!');
                 return null;
             } else {

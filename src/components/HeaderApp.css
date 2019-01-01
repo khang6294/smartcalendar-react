@@ -1,0 +1,12 @@
+#menu-list{
+    font-size:1.2em;
+    color:white;
+    font-weight:bold;
+    float: right;
+    text-align: center
+}
+
+.menu-item:hover{
+    cursor: pointer;
+    color:lightgrey
+}
