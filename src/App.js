@@ -7,11 +7,13 @@ import CalendarSchedule from './components/Calendar'
 import 'antd/dist/antd.css';
 import {useTodos} from './custom-hooks'
 import IndexAuth from './components/Auth/indexAuth'
+import Loader from './components/Loader/Loader'
 
 
 const App = (props) => {
 
     const { toDoAndDate,
+            authLoading,
             toDoList,
             isAuth,
             userCreation,
@@ -35,6 +37,21 @@ const App = (props) => {
         setLoading(true)
     },[loading])
 
+    if(!isAuth && authLoading){
+        renderView = (
+            <>
+                <Loader/>
+                <IndexAuth 
+                    getLoginInfo = {(userInfo) => login(userInfo)}
+                    getSignUpInfo = {(userInfo) => signup(userInfo)}
+                    userCreation = {userCreation}
+                    authLoading = {authLoading}
+                />
+            </>
+        )
+        
+    }
+
     if(isAuth){
         renderView = (
             <Layout onLogout = {logout}>
@@ -56,13 +73,14 @@ const App = (props) => {
                 />
             </Layout>
         )
-    } else if(!isAuth && loading) {
+    } else if(!isAuth && loading && !authLoading) {
         renderView = <IndexAuth 
             getLoginInfo = {(userInfo) => login(userInfo)}
             getSignUpInfo = {(userInfo) => signup(userInfo)}
             userCreation = {userCreation}
+            authLoading = {authLoading}
         />
-    }
+    } 
     
     return (
         <div className="App">

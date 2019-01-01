@@ -35,9 +35,9 @@ const indexAuth = (props) => {
         />
     }
     return (
-        <>
+        <div className={props.authLoading ? "auth-container" : null}>
             {renderView}
-        </>
+        </div>
     )
 }
 

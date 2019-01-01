@@ -14,6 +14,7 @@ export const useTodos = (initialValue = {dateWork:moment(Date.now()).format('YYY
     const [dateOri, setDateOri] = useState([])
     const [userInfo, setUserInfo] = useState({})
     const [isAuth, setIsAuth] = useState(false)
+    const [authLoading, setAuthLoading] = useState(false)
     const [userCreation, setUserCreation] = useState(false)
 
     useEffect(() => {
@@ -211,10 +212,12 @@ export const useTodos = (initialValue = {dateWork:moment(Date.now()).format('YYY
                   }
             `
         }
+        setAuthLoading(true)
         axios.post('http://localhost:8080/graphql',loginQuery)
             .then(res => {
                 setUserInfo(res.data.data.login)
                 setIsAuth(true)
+                setAuthLoading(false)
                 localStorage.setItem('token', res.data.data.login.token);
                 localStorage.setItem('userId', res.data.data.login.userId);
                 const remainingMilliseconds = 60 * 60 * 1000;
@@ -225,6 +228,7 @@ export const useTodos = (initialValue = {dateWork:moment(Date.now()).format('YYY
                 autoLogout(remainingMilliseconds)
             })
             .catch(err => {
+                setAuthLoading(false)
                 message.error(err.response.data.errors[0].message);
             });
     }
@@ -270,6 +274,7 @@ export const useTodos = (initialValue = {dateWork:moment(Date.now()).format('YYY
         login: login,
         logout:logout,
         signup: signup,
+        authLoading: authLoading,
         toDoAndDate: toDoAndDate,
         toDoList: toDoList,
         addToDo: addToDo,

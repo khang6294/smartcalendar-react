@@ -25,7 +25,7 @@ const register = (props) => {
     }
     const { getFieldDecorator } = props.form;
     return (
-        <div>
+        <>
         <div className="auth-background" />
         <div className="logo">
             Smart Calendar
@@ -103,7 +103,7 @@ const register = (props) => {
                 </div>
             </div>
         </Form>
-        </div>
+        </>
     );
 }
 

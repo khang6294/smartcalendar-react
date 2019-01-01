@@ -2,6 +2,10 @@
     box-sizing: border-box;
 }
 
+.auth-container {
+    opacity: 0.3
+}
+
 .auth-background {
     background: linear-gradient(-180deg, rgb(11, 102, 189) 40%, rgba(228, 225, 225, 0.877) 0%);
     height:100%;

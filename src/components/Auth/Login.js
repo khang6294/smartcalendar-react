@@ -24,13 +24,13 @@ const login = (props) => {
 
 	const { getFieldDecorator } = props.form;
 	return (
-		<div>
+		<>
 			<div className="auth-background" />
 			<div className="logo">
 				Smart Calendar
 			</div>
 			<Form onSubmit={handleSubmit} className="login-form">
-				<h1 className="welcome">Welcome back!</h1>
+				<h1 className="welcome">Login</h1>
 				<FormItem className="login-field">
 					<h5 className="login-field-name">EMAIL</h5>
 					{getFieldDecorator('email', {
@@ -84,7 +84,7 @@ const login = (props) => {
 				</div>
 				</div>
 			</Form>
-		</div>
+		</>
 	);
 }
 
