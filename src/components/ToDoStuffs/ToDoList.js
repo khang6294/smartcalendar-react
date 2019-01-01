@@ -1,8 +1,6 @@
 import React from 'react';
-import {List,Icon,Checkbox,Button} from 'antd'
-
-
-
+import {List,Icon,Checkbox} from 'antd'
+import './ToDoList.css'
 const toDoList = (props) => {
     const onComplete = (e,item) =>{
         props.completeItem({
@@ -10,13 +8,11 @@ const toDoList = (props) => {
             completed: e.target.checked
         })
     }
-    
-    
-
+ 
     return(
         <>
         <List
-            style= {{width: '50%', marginTop:'1rem'}}
+            className = "todo-list"
             bordered
             dataSource={props.toDoList}
             locale = {{
@@ -24,19 +20,6 @@ const toDoList = (props) => {
             }}
             renderItem= {item => (
                 <div>
-                    {/* {item.completed ? 
-                    <Icon 
-                        type="check-circle" 
-                        style={{
-                            position: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            height:'100%',
-                            zIndex: 100
-                        }}/> : 
-                    null 
-                    } */}
-
                 <List.Item 
                     style ={ item.completed ? {opacity: 0.3} : {}}
                     actions={[

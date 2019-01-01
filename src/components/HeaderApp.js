@@ -9,12 +9,12 @@ const headerApp = React.memo((props) => {
     return (
         <Header style={{background:'#0b66bd'}}>
             <Row type="flex">
-                <Col span={18}>
-                    <div style={{fontSize:'1.5em',color:'white',fontWeight:'bold'}}>
+                <Col xs={10} sm={12} md={15} lg={18} xl={18}>
+                    <div style={{fontSize:'1.4em',color:'white',fontWeight:'bold'}}>
                         SmartCalendar
                     </div>
                 </Col>
-                <Col span={3}>
+                <Col xs={7} sm={6} md={4} lg={3} xl={3}>
                     <div 
                         id="menu-list"
                     >
@@ -25,7 +25,7 @@ const headerApp = React.memo((props) => {
                         </div>
                     </div>
                 </Col>
-                <Col span={3}>
+                <Col xs={7} sm={6} md={4} lg={3} xl={3}>
                     <div 
                         id="menu-list"
                     >

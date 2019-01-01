@@ -1,5 +1,6 @@
 import React,{useState} from 'react';
 import {Input,Button,Row,message} from 'antd';
+import './AddToDo.css'
 
 
 const addToDo = React.memo((props) => {
@@ -34,9 +35,9 @@ const addToDo = React.memo((props) => {
     return (
         <>
             <Row type="flex" justify="start">
-                <Input 
+                <Input
+                    className="addToDo-field" 
                     value={inputValue} 
-                    style={{width:'200px'}}
                     onChange ={onInputChange}
                     onKeyPress = {(event) => {
                         if (event.which === 13 || event.keyCode === 13) {

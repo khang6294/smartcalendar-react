@@ -1,8 +1,8 @@
 import React, { useState,useEffect } from 'react';
 import './App.css';
 import Layout from './components/Layout'
-import AddToDo from './components/AddToDo'
-import ToDoList from './components/ToDoList'
+import AddToDo from './components/ToDoStuffs/AddToDo'
+import ToDoList from './components/ToDoStuffs/ToDoList'
 import CalendarSchedule from './components/Calendar'
 import 'antd/dist/antd.css';
 import {useTodos} from './custom-hooks'

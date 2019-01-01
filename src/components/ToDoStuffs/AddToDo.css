@@ -1,0 +1,9 @@
+.addToDo-field{
+    width: 200px !important;
+}
+
+@media (max-width: 480px) {
+    .addToDo-field{
+        width: 50% !important;
+    }
+}

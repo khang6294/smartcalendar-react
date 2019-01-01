@@ -10,3 +10,13 @@
     cursor: pointer;
     color:lightgrey
 }
+
+@media (max-width: 480px) {
+    #menu-list{
+        font-size:1em;
+        color:white;
+        font-weight:bold;
+        float: right;
+        text-align: center
+    }
+}
