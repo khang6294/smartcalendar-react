@@ -14,12 +14,23 @@ const headerApp = React.memo((props) => {
                         SmartCalendar
                     </div>
                 </Col>
-                <Col span={6}>
+                <Col span={3}>
                     <div 
                         id="menu-list"
                     >
                         <div 
-                            className="menu-item"
+                            className="menu-item-name"
+                        >
+                            Hi, {props.userInfo.name}
+                        </div>
+                    </div>
+                </Col>
+                <Col span={3}>
+                    <div 
+                        id="menu-list"
+                    >
+                        <div 
+                            className="menu-item-logout"
                             onClick = {() => props.onLogout()}
                         >
                             Logout

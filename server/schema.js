@@ -24,6 +24,7 @@ module.exports = buildSchema(`
     type AuthData {
         token: String!
         userId: String!
+        name: String!
     }
 
     input ToDoObj {

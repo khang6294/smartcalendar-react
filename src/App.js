@@ -13,6 +13,7 @@ import Loader from './components/Loader/Loader'
 const App = (props) => {
 
     const { toDoAndDate,
+            userInfo,
             authLoading,
             toDoList,
             isAuth,
@@ -54,7 +55,7 @@ const App = (props) => {
 
     if(isAuth){
         renderView = (
-            <Layout onLogout = {logout}>
+            <Layout userInfo= {userInfo} onLogout = {logout}>
                 <CalendarSchedule
                     toDoAndDate = {toDoAndDate}
                     dateSelected = {(date) => selectDate(date)}

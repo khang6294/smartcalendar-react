@@ -7,7 +7,7 @@ const { Content } = Layout;
 const layout = React.memo((props) => {
     return (
         <Layout className="layout">
-            <HeaderApp onLogout = {() => props.onLogout()}/>
+            <HeaderApp userInfo = {props.userInfo} onLogout = {() => props.onLogout()}/>
             <Content>
                 <div style={{ background: '#fff', padding: 50 }}>
                     {props.children}

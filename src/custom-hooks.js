@@ -28,11 +28,13 @@ export const useTodos = (initialValue = {dateWork:moment(Date.now()).format('YYY
             return;
         }
         const userId = localStorage.getItem('userId');
+        const name = localStorage.getItem('name')
         const remainingMilliseconds = new Date(expiryDate).getTime() - new Date().getTime();
         setIsAuth(true)
         setUserInfo({
             token:token,
-            userId: userId
+            userId: userId,
+            name: name
         })
         autoLogout(remainingMilliseconds);
     },[isAuth])
@@ -208,6 +210,7 @@ export const useTodos = (initialValue = {dateWork:moment(Date.now()).format('YYY
                     login(email:"${loginInfo.email}",password:"${loginInfo.password}"){
                         token
                         userId
+                        name
                     }
                   }
             `
@@ -220,6 +223,7 @@ export const useTodos = (initialValue = {dateWork:moment(Date.now()).format('YYY
                 setAuthLoading(false)
                 localStorage.setItem('token', res.data.data.login.token);
                 localStorage.setItem('userId', res.data.data.login.userId);
+                localStorage.setItem('name', res.data.data.login.name);
                 const remainingMilliseconds = 60 * 60 * 1000;
                 const expiryDate = new Date(
                     new Date().getTime() + remainingMilliseconds

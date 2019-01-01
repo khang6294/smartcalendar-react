@@ -6,7 +6,7 @@
     text-align: center
 }
 
-.menu-item:hover{
+.menu-item-logout:hover{
     cursor: pointer;
     color:lightgrey
 }

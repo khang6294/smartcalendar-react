@@ -42,7 +42,7 @@ module.exports = {
             'smartcalendarsuperdupersecrettokenbykennguyen',
             { expiresIn: '1h' }
         );
-        return { token: token, userId: user._id.toString() };
+        return { token: token, userId: user._id.toString(), name: user.name };
     },
     createWork: async function({workInput},req) {
         const work = new Work({
