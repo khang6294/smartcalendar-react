@@ -14,6 +14,7 @@ const toDoList = (props) => {
         <List
             className = "todo-list"
             bordered
+            itemLayout="horizontal"
             dataSource={props.toDoList}
             locale = {{
                 emptyText:'You have nothing to do!'
