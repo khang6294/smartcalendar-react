@@ -54,7 +54,7 @@ export const useTodos = (initialValue = {dateWork:moment(Date.now()).format('YYY
                     }
                 `
             } 
-            axios.post('http://localhost:8080/graphql',fetchAllWorks,{
+            axios.post('/graphql',fetchAllWorks,{
                 headers: {
                   Authorization: 'Bearer ' + userInfo.token
                 }
@@ -190,7 +190,7 @@ export const useTodos = (initialValue = {dateWork:moment(Date.now()).format('YYY
             }
         }
         
-        axios.post('http://localhost:8080/graphql',updateWork,{
+        axios.post('/graphql',updateWork,{
             headers: {
               Authorization: 'Bearer ' + userInfo.token
             }
@@ -216,7 +216,7 @@ export const useTodos = (initialValue = {dateWork:moment(Date.now()).format('YYY
             `
         }
         setAuthLoading(true)
-        axios.post('http://localhost:8080/graphql',loginQuery)
+        axios.post('/graphql',loginQuery)
             .then(res => {
                 setUserInfo(res.data.data.login)
                 setIsAuth(true)
@@ -263,7 +263,7 @@ export const useTodos = (initialValue = {dateWork:moment(Date.now()).format('YYY
               
             `
         }
-        axios.post('http://localhost:8080/graphql',signupQuery)
+        axios.post('/graphql',signupQuery)
             .then(res => {
                 setUserCreation(true)
                 message.success("Create user successfully");
