@@ -3,6 +3,8 @@ const express_graphql = require('express-graphql');
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const auth = require('./middleware/auth')
+const helmet = require('helmet');
+const compression = require('compression')
 const port = process.env.PORT || 8080;
 const schema = require('./schema')
 const root = require('./resolvers')
@@ -10,7 +12,8 @@ const app = express();
 const MONGODB_URI = 
 `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@cluster0-g4j7c.mongodb.net/${process.env.MONGODB_DATABASE}?retryWrites=true`
 app.use(bodyParser.json()); // application/json
-
+app.use(helmet()); //secure response header
+app.use(compression()); // compressing assests
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader(
