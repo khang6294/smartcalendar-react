@@ -1,0 +1,7 @@
+{
+    "env": {
+        "MONGODB_USER": "khang",
+        "MONGODB_PASSWORD": "GvVWiyfYeSZ889V",
+        "MONGODB_DATABASE": "smartcalendar"
+    }
+}

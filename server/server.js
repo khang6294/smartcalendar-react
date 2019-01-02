@@ -7,7 +7,8 @@ const port = process.env.PORT || 8080;
 const schema = require('./schema')
 const root = require('./resolvers')
 const app = express();
-
+const MONGODB_URI = 
+`mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@cluster0-g4j7c.mongodb.net/${process.env.MONGODB_DATABASE}?retryWrites=true`
 app.use(bodyParser.json()); // application/json
 
 app.use((req, res, next) => {
@@ -50,7 +51,7 @@ app.use('/graphql', express_graphql({
 }));
 
 //Database connection
-mongoose.connect('mongodb+srv://khang:GvVWiyfYeSZ889V@cluster0-g4j7c.mongodb.net/smartcalendar?retryWrites=true')
+mongoose.connect(MONGODB_URI)
     .then(result => {
         app.listen(port)
     })
