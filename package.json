@@ -31,7 +31,8 @@
     "server": "NODE_ENV=production MONGO_USER=khang MONGO_PASSWORD=GvVWiyfYeSZ889V MONGO_DATABASE=smartcalendar node ./server/server.js",
     "dev:client": "npm start",
     "dev:server": "nodemon ./server/server.js",
-    "dev": "concurrently --kill-others-on-fail \"npm run dev:client\" \"npm run dev:server\""
+    "dev": "concurrently --kill-others-on-fail \"npm run dev:client\" \"npm run dev:server\"",
+    "heroku-postbuild": "npm install && npm run build"
   },
   "eslintConfig": {
     "extends": "react-app"

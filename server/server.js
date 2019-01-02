@@ -3,6 +3,7 @@ const express_graphql = require('express-graphql');
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const auth = require('./middleware/auth')
+const path = require('path')
 const helmet = require('helmet');
 const compression = require('compression')
 const port = process.env.PORT || 8080;
@@ -14,6 +15,13 @@ const MONGODB_URI =
 app.use(bodyParser.json()); // application/json
 app.use(helmet()); //secure response header
 app.use(compression()); // compressing assests
+// Serve static files from the React frontend app
+app.use(express.static(path.join(__dirname, '/build')))
+// Anything that doesn't match the above, send back index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/build/index.html'))
+})
+
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader(
