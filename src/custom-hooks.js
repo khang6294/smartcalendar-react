@@ -5,11 +5,7 @@ import {message} from 'antd'
 export const useTodos = (initialValue = {dateWork:moment(Date.now()).format('YYYY-MM-DD'),toDoList: []}) => {
     const [toDoList, setToDoList] = useState(initialValue.toDoList);
     const [dateWorkSelected, setDateWorkSelected] = useState(initialValue.dateWork)
-    const [toDoAndDate, setToDoAndDate] = useState([{
-        dateWork: dateWorkSelected,
-        toDoList: toDoList,
-        editted:false
-    }])
+    const [toDoAndDate, setToDoAndDate] = useState([])
     const [edit, setEdit] = useState(false)
     const [dateOri, setDateOri] = useState([])
     const [userInfo, setUserInfo] = useState({})
@@ -67,7 +63,10 @@ export const useTodos = (initialValue = {dateWork:moment(Date.now()).format('YYY
                         }
                     })
                     setToDoAndDate(toDoAndDateFormat)
-                    setToDoList(toDoAndDateFormat.filter(ele => ele.dateWork === dateWorkSelected)[0].toDoList)
+                    const currentDateWork = toDoAndDateFormat.filter(ele => ele.dateWork === dateWorkSelected)[0]
+                    if(currentDateWork){
+                        setToDoList(currentDateWork.toDoList)
+                    }
                     const dateOri = res.data.data.works.map(work => work.dateWork)
                     setDateOri(dateOri)
                 })
@@ -87,21 +86,31 @@ export const useTodos = (initialValue = {dateWork:moment(Date.now()).format('YYY
                 setToDoList(toDoAndDateClone[i].toDoList)
                 toDoAndDateClone[i].editted = true
                 setEdit(toDoAndDateClone[i].editted)
-            }
+            } 
         }
-        
+        const dateOri = toDoAndDateClone.map(work => work.dateWork)
+        if(dateOri.indexOf(dateWorkSelected) < 0){
+            toDoAndDateClone.push({
+                dateWork: dateWorkSelected,
+                toDoList: [{
+                    toDo: newToDo,
+                    completed: false
+                }],
+                editted:true
+            })
+            setToDoAndDate(toDoAndDateClone)
+            setToDoList([{
+                toDo: newToDo,
+                completed: false
+            }])
+            setEdit(true)
+        }
     }
 
     const selectDate = (date) => {
         setDateWorkSelected(date)
-        let toDoAndDateClone = [...toDoAndDate]
         let dateAvail = toDoAndDate.map(ele => ele.dateWork)
         if(dateAvail.indexOf(date) < 0){
-            toDoAndDateClone.push({
-                dateWork: date,
-                toDoList: []
-            })
-            setToDoAndDate(toDoAndDateClone)
             setToDoList([])
         }
         for(let i = 0; i< toDoAndDate.length; i++){
@@ -196,6 +205,11 @@ export const useTodos = (initialValue = {dateWork:moment(Date.now()).format('YYY
             }
           })
             .then(res => {
+                let dateOriClone = [...dateOri]
+                if(dateOriClone.indexOf(dateWorkSelected) < 0){
+                    dateOriClone.push(dateWorkSelected)
+                }
+                setDateOri(dateOriClone)
                 toDoAndDate.filter(ele => ele.dateWork === dateWorkSelected)[0].editted = false
                 setEdit(toDoAndDate.filter(ele => ele.dateWork === dateWorkSelected)[0].editted)
             })

@@ -77,7 +77,7 @@ module.exports = {
         }
     },
     updateWork: async function({ dateWork, workInput }, req) {
-        const work = await Work.findOne({dateWork:dateWork}) 
+        const work = await Work.findOne({dateWork:dateWork, creator: req.userId.toString()}) 
         work.dateWork = dateWork       
         work.toDoList = workInput.toDoList;
         const updatedWork = await work.save();
