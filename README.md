@@ -1,4 +1,9 @@
-Implement todoapp with React hook and Ant design.
-For backend, using graphQL
+"Smart Calendar" is an app that allows users to add a list of works to accomplish in specific dates. It also has a calendar to show notifications and remind users stuffs they had left.
 
-The purpose of this project is to learn new features of React and practice using graphQL
+Tech stack using:
+
+- Frontend: React Hooks, Ant Design.
+- Backend: GraphQL, Express, MongoDB.
+
+Feel free to try and give any feedback: 
+https://smartcalendar-kn.herokuapp.com/
