@@ -10,7 +10,7 @@ const headerApp = React.memo((props) => {
         <Header style={{background:'#0b66bd'}}>
             <Row type="flex">
                 <Col xs={10} sm={12} md={15} lg={18} xl={18}>
-                    <div style={{fontSize:'1.4em',color:'white',fontWeight:'bold'}}>
+                    <div id = "logo">
                         SmartCalendar
                     </div>
                 </Col>

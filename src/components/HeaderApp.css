@@ -6,6 +6,12 @@
     text-align: center
 }
 
+#logo{
+    font-size:1.4em;
+    color:white;
+    font-weight:bold
+}
+
 .menu-item-logout:hover{
     cursor: pointer;
     color:lightgrey
@@ -13,10 +19,19 @@
 
 @media (max-width: 480px) {
     #menu-list{
+        font-size:0.8em;
+    
+    }
+    #logo{
+        font-size:1.2em;
+    }
+}
+
+@media (max-width: 320px) {
+    #menu-list{
+        font-size:0.7em;
+    }
+    #logo{
         font-size:1em;
-        color:white;
-        font-weight:bold;
-        float: right;
-        text-align: center
     }
 }
