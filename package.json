@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node":"10.1.0"
+    "node": "10.1.0"
   },
   "dependencies": {
     "antd": "^3.11.2",
@@ -45,5 +45,6 @@
   ],
   "devDependencies": {
     "nodemon": "^1.18.9"
-  }
+  },
+  "heroku-run-build-script": true
 }
